@@ -1,0 +1,13 @@
+[[language]]
+name = "python"  
+roots = ["pyproject.toml"]
+indent = { tab-width = 2, unit = "  " }
+# In case you'd like to use ruff alongside black for code formatting:
+formatter = { command = "black", args = ["--quiet", "-"] }
+auto-format = true
+
+[language-server.pylsp.config.pylsp]
+# pip install python-lsp-server python-lsp-ruff python-lsp-black
+plugins.ruff.enabled = true
+plugins.black.enabled = true
+
