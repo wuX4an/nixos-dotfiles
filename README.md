@@ -37,5 +37,3 @@ echo "Just see, don't touch"
 
 <br>
 <a href="./config">Here</a>
-
-# NixosRice
