@@ -19,7 +19,7 @@
 * #### Terminal Theme: [Catppuccin](https://github.com/catppuccin/konsole)
 * #### Icons: [Papirus Icon Dark](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)
 * #### Font: [JetBrains Mono Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/JetBrainsMono.zip)
-* #### Editor: [Helix](https://helix-editor.com/)
+* #### Editor: [LazyVim](https://www.lazyvim.org/)
 * #### Multiplexor: [Tmux](https://github.com/catppuccin/tmux/discussions/317#discussioncomment-11064512)
 * #### Shell: [Fish](https://fishshell.com/)
 * #### Fish Theme: [Tide](https://github.com/IlanCosman/tide)
