@@ -18,13 +18,12 @@
 * #### Window Decoration: [Scratchy](https://store.kde.org/p/1898344/)
 * #### Terminal Theme: [Catppuccin](https://github.com/catppuccin/konsole)
 * #### Icons: [Papirus Icon Dark](https://github.com/PapirusDevelopmentTeam/papirus-icon-theme)
-* #### Font: [ShureTechMono Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/ShareTechMono.zip)
+* #### Font: [JetBrains Mono Nerd Font](https://github.com/ryanoasis/nerd-fonts/releases/download/v3.3.0/JetBrainsMono.zip)
 * #### Editor: [Helix](https://helix-editor.com/)
-* #### Multiplexor: [Tmux](https://github.com/gpakosz/.tmux)
+* #### Multiplexor: [Tmux](https://github.com/catppuccin/tmux/discussions/317#discussioncomment-11064512)
 * #### Shell: [Fish](https://fishshell.com/)
-* #### Fish Theme: [Bobthefish](https://github.com/oh-my-fish/theme-bobthefish)
+* #### Fish Theme: [Tide](https://github.com/IlanCosman/tide)
 * #### Fish Extension Manager: [Oh My Fish](https://github.com/oh-my-fish/oh-my-fish/)
-* #### Pyton Env Manager: [Conda](https://anaconda.org/anaconda/conda)
 
 <br>
 <br>
