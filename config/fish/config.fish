@@ -1,13 +1,23 @@
-#!/usr/bin/env fish
 
-figlet "Welcome To The Turing Machine"
+# Autorun:
+#atuin init fish | source
+zoxide init fish | source
 
-if status is-interactive
-    # Commands to run in interactive sessions can go here
-end
-set -x VIRTUAL_ENV_DISABLE_PROMPT 1
+# Exports:
+export SUDO_PROMPT="󰭓  "
+export EDITOR="nvim"
+source ~/.profile
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-eval /home/wux4an/.conda/bin/conda "shell.fish" hook $argv | source
-# <<< conda initialize <<<
+# Alias:
+alias ls="exa --color --sort=type --across --header --modified --created --git --icons -1"
+alias sl="exa --color --sort=type --across --header --modified --created --git --icons -1"
+alias rm="rm -ri"
+alias cp="cp -r"
+alias py="python"
+alias pub="dart pub"
+alias dn="dotnet"
+alias play="mpv"
+alias clip="xclip -i -selection clipboard"
+alias cd="z"
+alias br="fd --full-path / | fzf -m --preview 'bat --theme Nord --color always {}'"
+alias vim="nvim"
