@@ -14,6 +14,10 @@ map("n", "<S-space>", "<cmd>Telescope keymap", { desc = "Keymaps" })
 map("i", "<C-h>", "<Esc>vbdi", { desc = "Delete word" })
 map("i", "<A-h>", "<Esc>vbdi", { desc = "Delete word" })
 
+map("n", "<Leader>m", "", { desc = "Compiler Panel" })
+map("n", "<Leader>mc", "<cmd>CompilerOpen<CR>", { desc = "Open Compiler Options" })
+map("n", "<Leader>mo", "<cmd>CompilerToggleResults<CR>", { desc = "View Compiler Results" })
+
 map("n", "<Leader>e", "<cmd>Neotree right toggle<CR>", { desc = "Explorer NeoTree (Root Dir)" })
 map("n", "<Leader>E", "<cmd>Neotree right toggle dir=./<CR>", { desc = "Explorer NeoTree (cwd)" })
 map("n", "<leader>N", "<cmd>Telekasten panel<CR>")
@@ -29,4 +33,4 @@ map("n", "<leader>Nb", "<cmd>Telekasten show_backlinks<CR>")
 map("n", "<leader>NI", "<cmd>Telekasten insert_img_link<CR>")
 
 -- Call insert link automatically when we start typing a link
-map("i", "[[", "<cmd>Telekasten insert_link<CR>")
+-- map("i", "[[", "<cmd>Telekasten insert_link<CR>")
