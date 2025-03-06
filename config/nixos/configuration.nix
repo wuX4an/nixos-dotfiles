@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports =
@@ -23,7 +23,7 @@
       systemd-boot.enable = true;         # Activates the systemd-boot bootloader.
 
     };
-     
+    kernelPackages = pkgs.linuxPackages_6_11;
     kernelParams = [
       "quiet"
       # "splash"
@@ -32,6 +32,7 @@
       "rd.systemd.show_status=false"
       "rd.udev.log_level=0"
       "udev.log_priority=0"
+      "amdgpu.dcdebugmask=0x10"
     ];
     consoleLogLevel = 0;
     # https://github.com/NixOS/nixpkgs/pull/108294
@@ -85,14 +86,23 @@
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
   # services.xserver.displayManager.autoLogin = false;
-  services.xserver.enable = true;
+  # services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm = {
     enable = true;
-    # theme = "catppuccin-mocha";
-    # package = pkgs.kdePackages.sddm;
+    settings = {
+      Autologin = {
+        Session = "plasma.desktop";
+        User = "wux4an";
+      };
+   };
+    
+   #theme = "catppuccin-mocha"
+   #package = pkgs.catppuccin-sddm;
   };
+ # services.greetd.enable = true;
+ # programs.regreet.enable = true;
   services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
@@ -128,29 +138,55 @@
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   # programs.home-manager.enable = true;
+  programs.light.enable = true;
   users.users.wux4an = {
     isNormalUser = true;
-    description = "wux4an";
+    description = "wuX4an";
     extraGroups = [ "networkmanager" "wheel" "docker"];
     packages = with pkgs; [
       kdePackages.bluez-qt
       kdePackages.kcharselect
-      libsForQt5.partitionmanager
+      # libsForQt5.partitionmanager
       kdePackages.isoimagewriter
+      # gparted
       bluez-tools
       bluez
       bluez-alsa
-      fish 
+      fish
+      zsh
       tmux
       git
       vscodium
-      conda
+      # python
+      python3
+      virtualenv
+      unstable.flutter
+      # csharp
+      unstable.dotnet-sdk_9
+      unstable.dotnet-runtime
+      omnisharp-roslyn
+      netcoredbg
+      # c
+      gcc
+      gnumake
+      # go
+      go
+      upx
+      gofumpt
+      gopls
+      # rust
+      rustup
+      sqlite
+      # godot
+      godot_4
+      zulu17
       starship
       nodejs_22
       firefox
       obsidian
       yakuake
       keepassxc
+      libreoffice-qt6-fresh
       vim
       vlc
       papirus-icon-theme
@@ -158,41 +194,75 @@
       zip
       unzip
       ffmpeg
+      ripgrep
       mpv
       openssh
       podman-tui
       podman-compose
+      nmap
+      netcat
       tree
       topgrade
       neofetch
+      onefetch
       cava
+      yazi
       cmatrix
-      kittysay
       bat
+      mdcat
       wget
       helix
-      figlet
+      unstable.neovim
+      lunarvim
+      dwt1-shell-color-scripts
       espeak
-      glow
+      lazygit
+      gh
+      fzf
+      fd
+      eza
+      zoxide
+      xclip
+      thefuck
+      mindustry
+      xonotic
+      vitetris
+      zsnes
+      mgba
+      yt-dlp 
+      # qbittorrent
+      spotube
+      gnome.gnome-boxes
+      openvpn
     ];
   };
 
+
+  
   # Fonts
   fonts = {
     enableDefaultPackages = true;
     packages = with pkgs; [
       noto-fonts
       noto-fonts-extra
+      # noto-fonts-cjk-sans
+      source-han-mono
       noto-fonts-emoji
-      source-han-sans
-      font-awesome
+      noto-fonts-emoji-blob-bin
       open-sans
+      source-han-sans
+      source-han-sans-japanese
+      source-han-serif-japanese
+      font-awesome
       fira-code
       fira-code-symbols
-      (nerdfonts.override { fonts = [ "FiraMono" "SpaceMono" "ShareTechMono" ]; })
+      iosevka
+      departure-mono
+      (nerdfonts.override { fonts = [ "FiraMono" "ComicShannsMono" "JetBrainsMono" ]; })
     ];
-
+    enableDefaultFonts = true;
     fontconfig = {
+      useEmbeddedBitmaps = true;
       defaultFonts = {
         serif = [ "Noto Serif" "Source Han Serif" ];
         sansSerif = [ "Open Sans" "Source Han Sans" ];
@@ -204,6 +274,7 @@
   #Shell Configuration
   users.users.wux4an.shell = pkgs.fish;
   programs.fish.enable = true;
+  security.sudo.extraConfig = "Defaults env_reset,pwfeedback";
 
   # Enable automatic login for the user.
   services.xserver.displayManager.autoLogin.enable = false;
@@ -211,11 +282,15 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.packageOverrides = pkgs: {
+    unstable = import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz") {};
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  # environment.systemPackages = with pkgs; [{}];
-
+  environment.systemPackages = with pkgs; [];
+    
+  
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -225,16 +300,28 @@
   # };
 
   # List services that you want to enable:
-
+  
+  # Enable prints
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [ gutenprint canon-cups-ufr2 cups-filters ];
+  };
+  
+  services.avahi = {
+    enable = true;
+    nssmdns = true;
+  };
+  
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
   
   # Virtualization
-  # virtualisation.libvirtd.enable = true;
-  # programs.virt-manager.enable = true;
+  virtualisation.libvirtd.enable = true;
+  programs.virt-manager.enable = true;
 
 
   # Container Virtualization
+  virtualisation.waydroid.enable = true;
   virtualisation.containers.enable = true;
   virtualisation = {
     podman = {
@@ -263,8 +350,30 @@
   programs.dconf.enable = true;
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
-    conda
+    # factorio
+    xorg.libX11   
+    xorg.libXext
+    xorg.libXinerama
+    xorg.libXrandr
+    xorg.libXcursor
+    xorg.libXrender
+    alsa-lib
+    libpulseaudio
+    libGL
+    # sm64coopdx
+    SDL2
+    # c#
+    icu
+    fontconfig
+    # godot
+    libxkbcommon
+    xorg.libXi
+    # other
+    lz4
+    openal
+    xorg.libX11.dev
   ];
+
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
@@ -278,7 +387,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "24.11"; # Did you read the comment?
 
 }
 
